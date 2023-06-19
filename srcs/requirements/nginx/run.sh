@@ -14,6 +14,6 @@ docker build -t $IMAGE_NAME .
 
 # Run
 
-docker run -d --name $CONTAINER_NAME -p $PORTS $IMAGE_NAME
+docker run -d --name $CONTAINER_NAME -p $PORTS -p 443:443 $IMAGE_NAME
 
 
