@@ -1,5 +1,5 @@
 FROM alpine:3.17
-RUN apk update && apk add nginx && apk add openssl
+RUN apk update && apk add --no-cache nginx && apk --no-cache add openssl
 COPY index.html /usr/local/nginx/www/index.html
 COPY nginx.conf /etc/nginx/nginx.conf 
 RUN openssl req -x509 \

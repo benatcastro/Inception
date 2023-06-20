@@ -1,5 +1,23 @@
 services:
   nginx:
-    build: nginx/
+    build: ./requirements/nginx/
+    image: source_nginx
+    container_name: nginx
     ports: 
-      - "80:8080"
+      - 443:443
+  mariadb:
+    build:
+      context: ./requirements/mariadb/
+      args:
+        MYSQL_USER: ${MYSQL_USER} 
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD} 
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} 
+    image: source_mariadb
+    container_name: mariadb
+    ports: 
+      - 3306:3306
+    volumes:
+      - database:/var/lib/mysql
+
+volumes:
+  database:
