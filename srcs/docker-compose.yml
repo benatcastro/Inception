@@ -18,6 +18,11 @@ services:
       - 3306:3306
     volumes:
       - database:/var/lib/mysql
+  wordpress:
+    build:
+      context: ./requirements/wordpress/
+    image: source_wordpress
+    container_name: wordpress
 
 volumes:
   database:
