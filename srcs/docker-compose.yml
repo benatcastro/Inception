@@ -5,6 +5,8 @@ services:
     container_name: nginx
     ports: 
       - 443:443
+    volumes:
+      - wordpress_data:/wordpress_page
   mariadb:
     build:
       context: ./requirements/mariadb/
@@ -23,6 +25,19 @@ services:
       context: ./requirements/wordpress/
     image: source_wordpress
     container_name: wordpress
+    volumes:
+      - wordpress_data:/wordpress_page
 
 volumes:
   database:
+    driver: local
+    driver_opts:
+      o: bind
+      device: /home/becastro/data/database
+      type: none
+  wordpress_data:
+    driver: local
+    driver_opts:
+      o: bind
+      device: /home/becastro/data/wordpress
+      type: none

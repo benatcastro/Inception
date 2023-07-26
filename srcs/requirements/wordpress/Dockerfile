@@ -7,6 +7,10 @@ RUN apk update && 	apk add --no-cache \
 
 RUN mkdir -p /var/www/html
 
-RUN wget https://wordpress.org/latest.zip && unzip latest.zip -d /var/www/html
+RUN wget https://wordpress.org/latest.zip && unzip latest.zip -d /var/www/html/
+WORKDIR /var/www/html
+RUN mv wordpress/* . && rm -rf wordpress
+
+
 
 CMD tail -f 

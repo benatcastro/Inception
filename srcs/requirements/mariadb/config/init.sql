@@ -1,4 +1,5 @@
 --create db
+SET PASSWORD FOR 'root'@'localhost' = PASSWORD('root1234');
 
 CREATE DATABASE wordpress;
 
@@ -7,5 +8,4 @@ CREATE USER 'placeholder_username'@'localhost' IDENTIFIED BY 'placeholder_passwo
 GRANT ALL PRIVILEGES ON mydatabase.wordpress TO 'placeholder_username'@'localhost';
 
 --set root pass
-SET PASSWORD FOR 'root'@'localhost' = PASSWORD('root1234');
 
