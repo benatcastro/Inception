@@ -7,6 +7,10 @@ services:
       - 443:443
     volumes:
       - wordpress_data:/wordpress_page
+    restart:
+      always
+    networks:
+      - inception
   mariadb:
     build:
       context: ./requirements/mariadb/
@@ -20,24 +24,42 @@ services:
       - 3306:3306
     volumes:
       - database:/var/lib/mysql
+    restart:
+      always
+    networks:
+      - inception
   wordpress:
+    ports: 
+      - 9000:900
     build:
       context: ./requirements/wordpress/
+    environment:
+      WP_DB_USER: ${MYSQL_USER}
+      WP_DB_PASS: ${MYSQL_PASSWORD}
+
     image: source_wordpress
     container_name: wordpress
     volumes:
-      - wordpress_data:/wordpress_page
+      - wordpress_data:/var/www/
+    restart:
+      always
+    networks:
+      - inception
 
 volumes:
   database:
     driver: local
     driver_opts:
       o: bind
-      device: /home/becastro/data/database
+      device: /home/$USER/data/database
       type: none
   wordpress_data:
     driver: local
     driver_opts:
       o: bind
-      device: /home/becastro/data/wordpress
+      device: /home/$USER/data/wordpress
       type: none
+
+networks:
+  inception:
+    driver: bridge
