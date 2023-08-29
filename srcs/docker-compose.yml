@@ -6,7 +6,7 @@ services:
     ports: 
       - 443:443
     volumes:
-      - wordpress_data:/wordpress_page
+      - wordpress_data:/var/www/
     restart:
       always
     networks:
