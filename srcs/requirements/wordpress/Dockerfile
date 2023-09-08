@@ -2,12 +2,13 @@ FROM alpine:3.17
 RUN apk update && 	apk add --no-cache 	\
 		  	php81 			\
 		  	php81-fpm 		\
-			php81-phar		\	
 			php81-openssl		\
    			php81-curl		\
+			php81-mysqli		\
    			wget			\
 			unzip			\
-   			mysql-client		
+   			mysql-client		\
+			php81-phar
       			
 
 RUN mkdir -p /var/www/html
@@ -17,20 +18,17 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
  	&& wget https://wordpress.org/latest.zip					\
   	&& unzip latest.zip								\	
    	&& rm latest.zip
+	
+RUN	addgroup www && adduser -D -G www php
 
 ARG	WORDPRESS_DB_NAME	\
 	MYSQL_USER		\
 	MYSQL_PASSWORD
 
 RUN mkdir docker_utils
-COPY conf/start.sh / 
-COPY conf/movesources.sh / 
+COPY tools/configure.sh .
+COPY conf/www.conf /etc/php81/php-fpm.d/www.conf
+RUN chmod +x configure.sh
 
-RUN chmod +x start.sh && chmod +x movesources.sh 
-
-WORKDIR /var/www/html
-
-RUN wp core download
-RUN wp config create --dbname=${WORDPRESS_DB_NAME} --dbuser=${MYSQL_USER} --dbpass=${MYSQL_PASSWORD} --dbhost=mariadb
-CMD ["php-fpm81", "--nodaemonize"]
+CMD ./configure.sh
 

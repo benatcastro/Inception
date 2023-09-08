@@ -6,9 +6,11 @@ services:
     ports: 
       - 443:443
     volumes:
-      - wordpress_data:/var/www/
+      - wordpress_data:/var/www/html
     restart:
       always
+    depends_on:
+      - wordpress
     networks:
       - inception
   mariadb:
@@ -20,8 +22,8 @@ services:
         MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} 
     image: source_mariadb
     container_name: mariadb
-    ports: 
-      - 3306:3306
+    expose:
+      - 3306
     volumes:
       - database:/var/lib/mysql
     restart:
@@ -29,18 +31,21 @@ services:
     networks:
       - inception
   wordpress:
-    ports: 
-      - 9000:900
+    expose: 
+      - 9000
     build:
       context: ./requirements/wordpress/
     environment:
-      WP_DB_USER: ${MYSQL_USER}
-      WP_DB_PASS: ${MYSQL_PASSWORD}
-
+        MYSQL_USER: ${MYSQL_USER} 
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD} 
+        WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME} 
+        WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST} 
     image: source_wordpress
     container_name: wordpress
+    depends_on:
+      - mariadb
     volumes:
-      - wordpress_data:/var/www/
+      - wordpress_data:/var/www/html
     restart:
       always
     networks:
