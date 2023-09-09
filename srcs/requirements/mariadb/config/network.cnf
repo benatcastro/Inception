@@ -1,6 +1,7 @@
 [mysqld]
 skip-host-cache
 skip-name-resolve
-bind-address=0.0.0.0
+#bind-address=0.0.0.0
+skip-bind-address
 skip-networking=0
 
