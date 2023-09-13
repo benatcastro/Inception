@@ -5,6 +5,7 @@ RUN apk update && 	apk add --no-cache 	\
 			php81-openssl		\
    			php81-curl		\
 			php81-mysqli		\
+			php81-iconv		\
    			wget			\
 			unzip			\
    			mysql-client		\
