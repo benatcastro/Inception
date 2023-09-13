@@ -7,7 +7,7 @@ wp config create 	--dbname=${WORDPRESS_DB_NAME} 		\
 			--dbpass=${MYSQL_PASSWORD} 		\
 			--dbhost=${WORDPRESS_DB_HOST} --skip-check
 
-wp core install 	--url=10.14.250.66	\
+wp core install 	--url=10.13.248.28	\
 			--title=${WORDPRESS_TITLE}		\
 			--admin_user=${WORDPRESS_USERNAME}	\
 			--admin_password=${WORDPRESS_PASSWORD}	\

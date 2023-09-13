@@ -1,7 +1,6 @@
 FROM alpine:3.17
 RUN apk update && apk add --no-cache nginx && apk --no-cache add openssl
-COPY index.html /var/www/html/index.html
-COPY nginx.conf /etc/nginx/nginx.conf 
+COPY conf/nginx.conf /etc/nginx/nginx.conf 
 RUN openssl req -x509 \
 		-nodes \
 		-days 365 \
@@ -10,6 +9,4 @@ RUN openssl req -x509 \
 		-newkey rsa:2048 \
 		-keyout /etc/ssl/private/nginx-selfsigned.key \
 		-out /etc/ssl/certs/nginx-selfsigned.crt;
-EXPOSE 80
-EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
